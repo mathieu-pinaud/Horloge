@@ -14,7 +14,6 @@ def my_check_tuple(my_tuple):
     return(True)
 
 
-
 #foncion pour dupliquer une liste afin de ne pas modifier la liste de base
 def my_dup_list(o_list):
     nw_l = []
@@ -39,21 +38,26 @@ def my_print_heure(time_list, t):
         else:
             check = 2
         print_list = my_modif_format(print_list)
-    if (print_list[0] < 10):
-        print('0', end= '')
-    print(print_list[0], ':',sep='', end='')
-    if (print_list[1] < 10):
-        print('0', end= '')
-    print(print_list[1], ':', sep = '',end='')
-    if (print_list[2] < 10):
-        print('0', end= '')
-    print(print_list[2], end='')
-    if (t == 2 and check == 1):
-        print(' PM')
-    elif (t == 2 and check == 2):
-        print(' AM')
-    else:
-        print('')
+    time_str = my_list_to_str(print_list, check)
+    print(time_str, end='\r')
+    
+
+def my_list_to_str(time_list, mode):
+    res = ''
+    if (time_list[0] < 10):
+        res += '0'
+    res += str(time_list[0]) + ':'
+    if (time_list[1] < 10):
+        res += '0'
+    res += str(time_list[1]) + ':'
+    if (time_list[2] < 10):
+        res += '0'
+    res += str(time_list[2])
+    if (mode == 1):
+        res += ' PM'
+    if (mode == 2):
+        res += 'AM'
+    return(res)
 
 #menu demandant a l'utilisateur si il souhaite creer ou non une alarme
 def my_menu_alarm():
@@ -86,7 +90,8 @@ def my_get_tuple(i):
         return(my_get_tuple(i))
 
 
-#fonction pour determiner l'heure de l'alarme avec securité du format
+#en soit je pourrais m'en passer mais ca permet de simplifier un peu le code
+#et de mettre la deuxieme fonction qui doit prendre un tuple
 def my_set_alarm(time_tuple):
         
         stop_time = [time_tuple[0], time_tuple[1], time_tuple[2]]
