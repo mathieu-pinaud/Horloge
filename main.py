@@ -1,4 +1,7 @@
 import time
+import keyboard
+import os
+
 
 #cette fontion vérifie que le tuple entré est au bon format
 def my_check_tuple(my_tuple):
@@ -119,29 +122,39 @@ def my_affichage_mode():
         print('Saisie incorrecte')
         return(my_affichage_mode())
 
+def my_pause(pause):
+    if (keyboard.read_key(' ') and pause == False):
+        pause = True
+        return(pause)
+    elif (keyboard.read_key(' ') and pause == True):
+        pause = False
+        return(pause)
+    else :
+        return(pause)
+           
 #fonction principale et mandataire du projet
 def afficher_heure(my_tuple):
     
+    pause = False
     if my_check_tuple(my_tuple) == False:
         return(None)
     alarm_time = my_menu_alarm()
     t = my_affichage_mode()
     time_list = [my_tuple[0], my_tuple[1], my_tuple[2]]
     while True:
-        my_check_alarm(time_list, alarm_time)
-        my_print_heure(time_list, t)
-        time_list[2] += 1
-        if (time_list[2] > 59):
-            time_list[1] += 1
-            time_list[2] = 0
-            if (time_list[1] > 59):
-                time_list[0] += 1
-                time_list[1] = 0
-                if (time_list[0] > 23):
-                    time_list[0] = 0
-        time.sleep(1)
-
-
+        if (pause == False):
+            my_check_alarm(time_list, alarm_time)
+            my_print_heure(time_list, t)
+            time_list[2] += 1
+            if (time_list[2] > 59):
+                time_list[1] += 1
+                time_list[2] = 0
+                if (time_list[1] > 59):
+                    time_list[0] += 1
+                    time_list[1] = 0
+                    if (time_list[0] > 23):
+                        time_list[0] = 0
+            time.sleep(1)
 
 time_tuple = my_get_tuple(1)
 afficher_heure(time_tuple)
